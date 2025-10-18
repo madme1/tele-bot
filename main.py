@@ -30,12 +30,12 @@ async def main():
     TELEGRAM_TOKEN, CHAT_ID = load_env_vars()
     bot = Bot(token=TELEGRAM_TOKEN)
 
-    news_interval = 60*30  # 30 minutes
+    news_interval = 60*60*6  # 30 minutes
     greet_interval = 60   # 1 minute
-    lastest_news_interval=60  # 1 minute
+    lastest_news_interval=60*60*3  # 1 minute
     
     news_task = asyncio.create_task(periodic_news(bot, CHAT_ID, news_interval))
-    lastest_news_task= asyncio.create_task(periodic_latest_news(bot, CHAT_ID, news_interval))
+    lastest_news_task= asyncio.create_task(periodic_latest_news(bot, CHAT_ID, lastest_news_interval))
     # greet_task = asyncio.create_task(periodic_greet(bot, CHAT_ID, greet_interval))
 
     # await asyncio.gather(news_task, greet_task)
@@ -46,3 +46,4 @@ if __name__ == "__main__":
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
         logger.info("Bot stopped manually")
+
